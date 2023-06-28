@@ -13,14 +13,7 @@ import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.Scanner;
 
-/**
- * Clase FileHandler del proyecto.
- *
- * @author Daniela
- * @author Jose
- * @author Kevin
- * @author Nicolas
- */
+
 
 public class FileHandler {
 
@@ -48,7 +41,7 @@ public class FileHandler {
 	 * @return content
 	 */
 	public static String loadFile(String filename) {
-		file = new File("src/model/persistance/" + filename);
+		file = new File("Bases de datos/" + filename);
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -74,7 +67,7 @@ public class FileHandler {
 
 
 	public static void writeFile(String filename, String content) {
-		file = new File("src/model/persistance/" + filename);
+		file = new File("Bases de datos/" + filename);
 		if (!file.exists()) {
 			try {
 				file.createNewFile();

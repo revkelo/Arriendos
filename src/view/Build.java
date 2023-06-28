@@ -56,6 +56,7 @@ public class Build extends JFrame {
 		contentPane.add(comboBox);
 		
 		TextField textField = new TextField();
+		textField.setFont(new Font("Dialog", Font.PLAIN, 26));
 		textField.setBounds(193, 81, 222, 36);
 		contentPane.add(textField);
 		
@@ -71,8 +72,10 @@ public class Build extends JFrame {
 		lblNewLabel_1_1.setBounds(48, 135, 123, 36);
 		contentPane.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(203, 192, 46, 14);
+		JLabel lblNewLabel_2 = new JLabel("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setBounds(20, 195, 432, 14);
 		contentPane.add(lblNewLabel_2);
 		
 		JButton btnNewButton = new JButton("Comprobante");

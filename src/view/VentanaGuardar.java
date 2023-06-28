@@ -3,6 +3,9 @@ package view;
 import java.awt.Button;
 import java.awt.Font;
 import java.awt.TextField;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,12 +36,17 @@ public class VentanaGuardar extends JFrame {
 		titulo.setBounds(199, 11, 64, 42);
 		add(titulo);
 
-		arriendosCombo = new JComboBox();
+		arriendosCombo = new JComboBox<String>();
+
 		arriendosCombo.setBounds(193, 141, 222, 30);
 		add(arriendosCombo);
 
 		precioText = new TextField();
 		precioText.setBounds(193, 81, 222, 36);
+		precioText.setFont(new Font("Dialog", Font.PLAIN, 26));
+
+
+
 		add(precioText);
 
 		valor = new JLabel("Precio Arriendo");
@@ -53,17 +61,26 @@ public class VentanaGuardar extends JFrame {
 		arriendo.setBounds(48, 135, 123, 36);
 		add(arriendo);
 
-		ruta = new JLabel("New label");
-		ruta.setBounds(203, 192, 46, 14);
+		ruta = new JLabel("");
+		ruta.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		ruta.setHorizontalAlignment(SwingConstants.CENTER);
+		ruta.setBounds(20, 195, 432, 14);
 		add(ruta);
 
 		comprobante = new JButton("Comprobante");
 		comprobante.setBounds(170, 217, 123, 23);
+		comprobante.setActionCommand("Comprobante");
 		add(comprobante);
 
 		guardar = new Button("Guardar");
 		guardar.setBounds(152, 270, 168, 49);
+		guardar.setActionCommand("Guardar_1");
 		add(guardar);
+	}
+
+	public static String formatearNumeroConComas(int numero) {
+		DecimalFormat formato = new DecimalFormat("#,###");
+		return formato.format(numero);
 	}
 
 	public JLabel getTitulo() {

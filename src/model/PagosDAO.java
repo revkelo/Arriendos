@@ -9,13 +9,17 @@ import model.persistance.FileHandler;
 public class PagosDAO {
 
 	private ArrayList<PagosDTO> lista;
+	private ArrayList<String> arriendos;
 
 	public PagosDAO() {
 		lista = new ArrayList<PagosDTO>();
+		arriendos = new ArrayList<String>();
 		cargarHistorialArriendo();
 	}
 
-	public String contenidoArriendos() {
+
+	
+	public String contenidoHistorialArriendos() {
 		String res = "";
 		for (PagosDTO s : lista) {
 			res += s.toString();
@@ -24,9 +28,10 @@ public class PagosDAO {
 	}
 
 	public void escribirHistorialArriendo() {
-		String content = contenidoArriendos();
+		String content = contenidoHistorialArriendos();
 		FileHandler.writeFile("datos.csv", content);
 	}
+
 
 	public void cargarHistorialArriendo() {
 		String content = FileHandler.loadFile("datos.csv");
