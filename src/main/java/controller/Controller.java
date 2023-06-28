@@ -229,20 +229,28 @@ System.out.println(nombre_archivo);
 			String extension = getFileExtension(comprobante);
 
 			if (extension.equals("pdf")) {
+				
 				System.out.println("Se seleccionó un archivo PDF: " + comprobante.getAbsolutePath());
 
 				String DESTINATION_DIRECTORY = Nombreinmueble; // Reemplaza con la ruta deseada
 
-				String fileName = nombreArchivo(Nombreinmueble);
-				File destinationFile = new File(DESTINATION_DIRECTORY, fileName);
+				
+				
+	             String fileName = nombreArchivo(Nombreinmueble)+".pdf";
+	     
+	             File destinationFile = new File(DESTINATION_DIRECTORY, fileName);
+				
+	             try {
+	                 Files.copy(comprobante.toPath(), destinationFile.toPath());
+	                 JOptionPane.showMessageDialog(null, "El archivo se copió correctamente.");
+	             } catch (IOException ex) {
+	                 JOptionPane.showMessageDialog(null, "Ocurrió un error al copiar el archivo: " + ex.getMessage());
+	             }
+				
+		
 
-				try {
-					Files.copy(comprobante.toPath(), destinationFile.toPath());
-					JOptionPane.showMessageDialog(null, "El archivo se copió correctamente.");
-				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(null, "Ocurrió un error al copiar el archivo: " + ex.getMessage());
-				}
-
+				
+				
 			} else {
 				System.out.println("Se seleccionó una imagen: " + comprobante.getAbsolutePath());
 
