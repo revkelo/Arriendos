@@ -31,10 +31,13 @@ public class Controller implements ActionListener {
 
 		if (comando.equals("Agregar")) {
 			System.out.println(comando);
+			md.getPagodao().crear("Soy la monda", 12312312, "asdasda", "asdasd");
 		}
 
 		if (comando.equals("Modificar")) {
 			System.out.println(comando);
+			
+			System.out.println(md.getPagodao().getLista().size());
 		}
 
 		if (comando.equals("Eliminar")) {

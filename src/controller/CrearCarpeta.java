@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
@@ -8,21 +10,50 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CrearCarpeta {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		// CREAR CARPETA
-		String nombreCarpeta = "Arriendo local cumaral";
-		File carpeta = new File(nombreCarpeta);
-
-		if (carpeta.exists()) {
-			System.out.println("La carpeta ya existe.");
-		} else {
-			if (carpeta.mkdir()) {
-				System.out.println("La carpeta ha sido creada.");
-			} else {
-				System.out.println("No se pudo crear la carpeta.");
-			}
-		}
+		String nombreCarpeta = "Arriendo local 1 cumaral";
+        String nombreArchivo = "Verificacion.txt";
+        String mensaje = "¡Carpeta arriendo!";
+        
+        File carpeta = new File(nombreCarpeta);
+        File archivo = new File(nombreCarpeta, nombreArchivo);
+        
+        if (carpeta.exists()) {
+            System.out.println("La carpeta ya existe.");
+        } else {
+            if (carpeta.mkdir()) {
+                System.out.println("La carpeta ha sido creada.");
+            } else {
+                System.out.println("No se pudo crear la carpeta.");
+            }
+        }
+        
+        if (archivo.exists()) {
+            System.out.println("El archivo ya existe.");
+            FileWriter writer = new FileWriter(archivo);
+            writer.write(mensaje);
+            writer.close();
+        } else {
+            try {
+                if (archivo.createNewFile()) {
+                    System.out.println("El archivo ha sido creado.");
+                    
+                    FileWriter writer = new FileWriter(archivo);
+                    writer.write(mensaje);
+                    writer.close();
+                    System.out.println("Se ha escrito el mensaje en el archivo.");
+               
+                    
+                    
+                } else {
+                    System.out.println("No se pudo crear el archivo.");
+                }
+            } catch (IOException e) {
+                System.out.println("Ocurrió un error al crear el archivo: " + e.getMessage());
+            }
+        }
 		System.out.println(carpeta.getAbsoluteFile());
 		// TRUCO DE FILECHOOSER
 
