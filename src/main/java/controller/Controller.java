@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -73,14 +75,14 @@ public class Controller implements ActionListener {
 			public void focusLost(FocusEvent e) {
 
 				try {
-				
+
 					String numeroFormateado = VentanaGuardar
 							.formatearNumeroConComas(Integer.parseInt(vp.getVguard().getPrecioText().getText()));
 
 					precio = Integer.parseInt(vp.getVguard().getPrecioText().getText());
 					vp.getVguard().getPrecioText().setText(numeroFormateado);
 				} catch (Exception e2) {
-				System.out.println("ERROR");
+					System.out.println("ERROR");
 				}
 
 			}
@@ -98,6 +100,17 @@ public class Controller implements ActionListener {
 		return extension;
 	}
 
+	public String nombreArchivo(String nombreInmueble) {
+
+		String nombre_archivo;
+		LocalDateTime fechaHoraActual = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy - MMMM - HH-mm");
+		String fechaHoraFormateada = fechaHoraActual.format(formatter);
+		nombre_archivo = fechaHoraFormateada + " - " + nombreInmueble;
+System.out.println(nombre_archivo);
+		return nombre_archivo;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
@@ -110,7 +123,6 @@ public class Controller implements ActionListener {
 		if (comando.equals("Modificar")) {
 			System.out.println(comando);
 
-			System.out.println(md.getPagodao().getLista().size());
 		}
 
 		if (comando.equals("Eliminar")) {
@@ -161,101 +173,103 @@ public class Controller implements ActionListener {
 		}
 
 		if (comando.equals("Guardar_1")) {
-		
+
 			String Nombreinmueble = vp.getVguard().getArriendosCombo().getSelectedItem().toString();
-			
+
 			String nombreCarpeta = Nombreinmueble;
-	        String nombreArchivo = "Verificacion.txt";
-	        String mensaje = "¡Carpeta arriendo!";
-	        
-	        File carpeta = new File(nombreCarpeta);
-	        File archivo = new File(nombreCarpeta, nombreArchivo);
-	        
-	        if (carpeta.exists()) {
-	       
-	        } else {
-	            if (carpeta.mkdir()) {
-	             
-	            } else {
-	                System.out.println("No se pudo crear la carpeta.");
-	            }
-	        }
-	        
-	        if (archivo.exists()) {
-	    
-	            FileWriter writer;
+			String nombreArchivo = "Verificacion.txt";
+			String mensaje = "¡Carpeta arriendo!";
+
+			File carpeta = new File(nombreCarpeta);
+			File archivo = new File(nombreCarpeta, nombreArchivo);
+
+			if (carpeta.exists()) {
+
+			} else {
+				if (carpeta.mkdir()) {
+
+				} else {
+					System.out.println("No se pudo crear la carpeta.");
+				}
+			}
+
+			if (archivo.exists()) {
+
+				FileWriter writer;
 				try {
 					writer = new FileWriter(archivo);
-		            writer.write(mensaje);
-		            writer.close();
+					writer.write(mensaje);
+					writer.close();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
-	        } else {
-	            try {
-	                if (archivo.createNewFile()) {
-	                    System.out.println("El archivo ha sido creado.");
-	                    
-	                    FileWriter writer = new FileWriter(archivo);
-	                    writer.write(mensaje);
-	                    writer.close();
-	                    System.out.println("Se ha escrito el mensaje en el archivo.");
-	               
-	                    
-	                    
-	                } else {
-	                    System.out.println("No se pudo crear el archivo.");
-	                }
-	            } catch (IOException e1) {
-	                System.out.println("Ocurrió un error al crear el archivo: " + e1.getMessage());
-	            }
-	        }
+			} else {
+				try {
+					if (archivo.createNewFile()) {
+						System.out.println("El archivo ha sido creado.");
+
+						FileWriter writer = new FileWriter(archivo);
+						writer.write(mensaje);
+						writer.close();
+						System.out.println("Se ha escrito el mensaje en el archivo.");
+
+					} else {
+						System.out.println("No se pudo crear el archivo.");
+					}
+				} catch (IOException e1) {
+					System.out.println("Ocurrió un error al crear el archivo: " + e1.getMessage());
+				}
+			}
 			System.out.println(carpeta.getAbsoluteFile());
-			
-			
-			
-		String DESTINATION_DIRECTORY = Nombreinmueble; // Reemplaza con la ruta deseada
 
-			
-			
-             String fileName = comprobante.getName();
-             File destinationFile = new File(DESTINATION_DIRECTORY, fileName);
-			
-             try {
-                 Files.copy(comprobante.toPath(), destinationFile.toPath());
-                 JOptionPane.showMessageDialog(null, "El archivo se copió correctamente.");
-             } catch (IOException ex) {
-                 JOptionPane.showMessageDialog(null, "Ocurrió un error al copiar el archivo: " + ex.getMessage());
-             }
-			
 			md.getPagodao().crear(Nombreinmueble, precio, comprobante.getAbsolutePath(), "Truco");
-			
 
-			
-			String imagePath = comprobante.getAbsolutePath(); // Ruta de la imagen
-	        String pdfPath = Nombreinmueble+"/path_to_save_pdf.pdf"; // Ruta para guardar el archivo PDF
+			String extension = getFileExtension(comprobante);
 
-	        try {
-	            BufferedImage image = ImageIO.read(new File(imagePath));
-	            PDDocument document = new PDDocument();
-	            PDPage page = new PDPage(new PDRectangle(image.getWidth(), image.getHeight()));
-	            document.addPage(page);
+			if (extension.equals("pdf")) {
+				System.out.println("Se seleccionó un archivo PDF: " + comprobante.getAbsolutePath());
 
-	            PDImageXObject pdImage = LosslessFactory.createFromImage(document, image);
-	            PDPageContentStream contentStream = new PDPageContentStream(document, page);
-	            contentStream.drawImage(pdImage, 0, 0);
-	            contentStream.close();
+				String DESTINATION_DIRECTORY = Nombreinmueble; // Reemplaza con la ruta deseada
 
-	            document.save(pdfPath);
-	            document.close();
+				String fileName = nombreArchivo(Nombreinmueble);
+				File destinationFile = new File(DESTINATION_DIRECTORY, fileName);
 
-	            System.out.println("La imagen se ha convertido correctamente a PDF.");
-	        } catch (IOException e1) {
-	            System.out.println("Error al convertir la imagen a PDF: " + e1.getMessage());
-	        }
-			
+				try {
+					Files.copy(comprobante.toPath(), destinationFile.toPath());
+					JOptionPane.showMessageDialog(null, "El archivo se copió correctamente.");
+				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(null, "Ocurrió un error al copiar el archivo: " + ex.getMessage());
+				}
+
+			} else {
+				System.out.println("Se seleccionó una imagen: " + comprobante.getAbsolutePath());
+
+				String imagePath = comprobante.getAbsolutePath(); // Ruta de la imagen
+				String pdfPath = Nombreinmueble + "/"+nombreArchivo(Nombreinmueble)+".pdf"; // Ruta para guardar el archivo PDF
+
+				try {
+					BufferedImage image = ImageIO.read(new File(imagePath));
+					PDDocument document = new PDDocument();
+					PDPage page = new PDPage(new PDRectangle(image.getWidth(), image.getHeight()));
+					document.addPage(page);
+
+					PDImageXObject pdImage = LosslessFactory.createFromImage(document, image);
+					PDPageContentStream contentStream = new PDPageContentStream(document, page);
+					contentStream.drawImage(pdImage, 0, 0);
+					contentStream.close();
+
+					document.save(pdfPath);
+					document.close();
+
+					System.out.println("La imagen se ha convertido correctamente a PDF.");
+				} catch (IOException e1) {
+					System.out.println("Error al convertir la imagen a PDF: " + e1.getMessage());
+				}
+
+			}
+
 		}
 	}
 
