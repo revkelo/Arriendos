@@ -12,10 +12,10 @@ public class PagosDAO {
 
 	public PagosDAO() {
 		lista = new ArrayList<PagosDTO>();
-		loadFile();
+		cargarHistorialArriendo();
 	}
 
-	public String contentBase() {
+	public String contenidoArriendos() {
 		String res = "";
 		for (PagosDTO s : lista) {
 			res += s.toString();
@@ -23,12 +23,12 @@ public class PagosDAO {
 		return res;
 	}
 
-	public void writeFile() {
-		String content = contentBase();
+	public void escribirHistorialArriendo() {
+		String content = contenidoArriendos();
 		FileHandler.writeFile("datos.csv", content);
 	}
 
-	public void loadFile() {
+	public void cargarHistorialArriendo() {
 		String content = FileHandler.loadFile("datos.csv");
 		String[] lines = content.split("\n");
 		for (String s : lines) {
@@ -44,7 +44,7 @@ public class PagosDAO {
 	public void crear(String arriendo, int pago, String comprobante, String fecha) {
 		PagosDTO aux = new PagosDTO(arriendo, pago, comprobante, fecha);
 		lista.add(aux);
-		writeFile();
+		escribirHistorialArriendo();
 	}
 
 	public boolean eliminar(int pos) {

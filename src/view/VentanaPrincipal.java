@@ -14,6 +14,7 @@ public class VentanaPrincipal extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1030, 700);
 		setLayout(null);
+		setLocationRelativeTo(null);
 
 		titulo = new Label("ARRIENDOS");
 		titulo.setAlignment(Label.CENTER);

@@ -30,8 +30,8 @@ public class Controller implements ActionListener {
 		String comando = e.getActionCommand();
 
 		if (comando.equals("Agregar")) {
-			System.out.println(comando);
-			md.getPagodao().crear("Soy la monda", 12312312, "asdasda", "asdasd");
+vp.getVprin().setVisible(false);
+vp.getVguard().setVisible(true);
 		}
 
 		if (comando.equals("Modificar")) {
