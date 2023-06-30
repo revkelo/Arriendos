@@ -50,5 +50,10 @@ public class PagosDTO {
 		this.fecha = fecha;
 	}
 	
-
+@Override
+public String toString() {
+	String res = "";
+	res += this.arriendo + ";" + this.pago + ";" + this.comprobante + ";" + this.fecha + "\n";
+	return res;
+}
 }
