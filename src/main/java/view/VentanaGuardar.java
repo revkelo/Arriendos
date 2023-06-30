@@ -3,6 +3,7 @@ package view;
 import java.awt.Button;
 import java.awt.Font;
 import java.awt.TextField;
+import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.DecimalFormat;
@@ -20,7 +21,7 @@ public class VentanaGuardar extends JFrame {
 	JLabel titulo, valor, arriendo, ruta;
 	JComboBox arriendosCombo;
 	TextField precioText;
-	JButton comprobante;
+	JButton comprobante,salir;
 	Button guardar;
 
 	public VentanaGuardar() {
@@ -30,7 +31,7 @@ public class VentanaGuardar extends JFrame {
 		setVisible(false);
 		setLayout(null);
 		setLocationRelativeTo(null);
-
+        setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.png"));
 		titulo = new JLabel("Agregar");
 		titulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		titulo.setBounds(199, 11, 64, 42);
@@ -67,6 +68,12 @@ public class VentanaGuardar extends JFrame {
 		ruta.setBounds(20, 195, 432, 14);
 		add(ruta);
 
+		
+		salir = new JButton("Salir");
+		salir.setBounds(10, 290, 73, 23);
+		salir.setActionCommand("Salir_guardar");
+		add(salir);
+		
 		comprobante = new JButton("Comprobante");
 		comprobante.setBounds(170, 217, 123, 23);
 		comprobante.setActionCommand("Comprobante");
@@ -113,6 +120,14 @@ public class VentanaGuardar extends JFrame {
 
 	public void setRuta(JLabel ruta) {
 		this.ruta = ruta;
+	}
+
+	public JButton getSalir() {
+		return salir;
+	}
+
+	public void setSalir(JButton salir) {
+		this.salir = salir;
 	}
 
 	public JComboBox getArriendosCombo() {

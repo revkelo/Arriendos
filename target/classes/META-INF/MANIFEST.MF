@@ -1,5 +1,7 @@
 Manifest-Version: 1.0
 Built-By: Kevin
 Build-Jdk: 17.0.7
+Class-Path: pdfbox-2.0.27.jar fontbox-2.0.27.jar commons-logging-1.2.jar
+Main-Class: controller.AplMain
 Created-By: Maven Integration for Eclipse
 

@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -49,7 +50,7 @@ public class Controller implements ActionListener {
 
 	public void cargarCombo() {
 
-		DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<String>();
 		for (ArriendosDTO objeto : md.getArridao().getLista()) {
 			comboBoxModel.addElement(objeto.getNombre_inmueble());
 		}
@@ -64,14 +65,20 @@ public class Controller implements ActionListener {
 		vp.getVprin().getSalir_b().addActionListener(this);
 		vp.getVguard().getComprobante().addActionListener(this);
 		vp.getVguard().getGuardar().addActionListener(this);
+		vp.getVguard().getSalir().addActionListener(this);
+
+		vp.getVprin().getGuardarItem().addActionListener(this);
+		vp.getVprin().getMostrarItem().addActionListener(this);
+		vp.getVprin().getEliminarItem().addActionListener(this);
+		vp.getVprin().getModificarItem().addActionListener(this);
+
+		vp.getVarriend().getSalirItem().addActionListener(this);
 
 		vp.getVguard().getPrecioText().addFocusListener(new FocusListener() {
-			@Override
 			public void focusGained(FocusEvent e) {
 
 			}
 
-			@Override
 			public void focusLost(FocusEvent e) {
 
 				try {
@@ -82,7 +89,7 @@ public class Controller implements ActionListener {
 					precio = Integer.parseInt(vp.getVguard().getPrecioText().getText());
 					vp.getVguard().getPrecioText().setText(numeroFormateado);
 				} catch (Exception e2) {
-					System.out.println("ERROR");
+
 				}
 
 			}
@@ -107,13 +114,13 @@ public class Controller implements ActionListener {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy - MMMM - HH-mm");
 		String fechaHoraFormateada = fechaHoraActual.format(formatter);
 		nombre_archivo = fechaHoraFormateada + " - " + nombreInmueble;
-System.out.println(nombre_archivo);
+		System.out.println(nombre_archivo);
 		return nombre_archivo;
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
+
 		// VENTANA PRINCIPAL
 		if (comando.equals("Agregar")) {
 			vp.getVprin().setVisible(false);
@@ -122,18 +129,65 @@ System.out.println(nombre_archivo);
 
 		if (comando.equals("Modificar")) {
 			System.out.println(comando);
+			try {
 
+				File file = new File("Bases de datos/datos.csv");
+
+				Desktop.getDesktop().open(file);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 		if (comando.equals("Eliminar")) {
 			System.out.println(comando);
+	
+
 		}
 
 		if (comando.equals("Salir")) {
 			System.out.println(comando);
+			System.exit(0);
+		}
+
+		if (comando.equals("salir_menu")) {
+			System.out.println(comando);
+			System.exit(0);
+		}
+
+		// VENTANA PRINCIPAL - ARRIENDOS
+		if (comando.equals("mostrar_locales_apartamentos")) {
+			vp.getVarriend().borrar();
+			vp.getVarriend().imprimirArriendos(md.getArridao().getLista());
+			vp.getVarriend().setVisible(true);
+
+		}
+		
+		if (comando.equals("salir_mostrar_arriendos")) {
+			vp.getVarriend().setVisible(false);
+		
+		}
+		if (comando.equals("guardar_locales_apartamentos")) {
+			System.out.println(comando);
+
+		}
+		if (comando.equals("modificar_locales_apartamentos")) {
+			System.out.println(comando);
+
+		}
+		if (comando.equals("eliminar_locales_apartamentos")) {
+			System.out.println(comando);
+
 		}
 
 		// VENTANA GUARDAR
+
+		if (comando.equals("Salir_guardar")) {
+			vp.getVprin().setVisible(true);
+			vp.getVguard().setVisible(false);
+		}
+
 		if (comando.equals("Comprobante")) {
 
 			// TRUCO DE FILECHOOSER
@@ -229,33 +283,28 @@ System.out.println(nombre_archivo);
 			String extension = getFileExtension(comprobante);
 
 			if (extension.equals("pdf")) {
-				
+
 				System.out.println("Se seleccionó un archivo PDF: " + comprobante.getAbsolutePath());
 
 				String DESTINATION_DIRECTORY = Nombreinmueble; // Reemplaza con la ruta deseada
 
-				
-				
-	             String fileName = nombreArchivo(Nombreinmueble)+".pdf";
-	     
-	             File destinationFile = new File(DESTINATION_DIRECTORY, fileName);
-				
-	             try {
-	                 Files.copy(comprobante.toPath(), destinationFile.toPath());
-	                 JOptionPane.showMessageDialog(null, "El archivo se copió correctamente.");
-	             } catch (IOException ex) {
-	                 JOptionPane.showMessageDialog(null, "Ocurrió un error al copiar el archivo: " + ex.getMessage());
-	             }
-				
-		
+				String fileName = nombreArchivo(Nombreinmueble) + ".pdf";
 
-				
-				
+				File destinationFile = new File(DESTINATION_DIRECTORY, fileName);
+
+				try {
+					Files.copy(comprobante.toPath(), destinationFile.toPath());
+					JOptionPane.showMessageDialog(null, "Guardado");
+				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(null, "Ocurrió un error al copiar el archivo: " + ex.getMessage());
+				}
+
 			} else {
 				System.out.println("Se seleccionó una imagen: " + comprobante.getAbsolutePath());
 
 				String imagePath = comprobante.getAbsolutePath(); // Ruta de la imagen
-				String pdfPath = Nombreinmueble + "/"+nombreArchivo(Nombreinmueble)+".pdf"; // Ruta para guardar el archivo PDF
+				String pdfPath = Nombreinmueble + "/" + nombreArchivo(Nombreinmueble) + ".pdf"; // Ruta para guardar el
+																								// archivo PDF
 
 				try {
 					BufferedImage image = ImageIO.read(new File(imagePath));
@@ -271,7 +320,7 @@ System.out.println(nombre_archivo);
 					document.save(pdfPath);
 					document.close();
 
-					System.out.println("La imagen se ha convertido correctamente a PDF.");
+					JOptionPane.showMessageDialog(null, "Guardado");
 				} catch (IOException e1) {
 					System.out.println("Error al convertir la imagen a PDF: " + e1.getMessage());
 				}
