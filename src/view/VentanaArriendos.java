@@ -25,7 +25,7 @@ public class VentanaArriendos extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500, 300);
 		setLocationRelativeTo(null);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.png"));
+//		setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.png"));
 		setUndecorated(true);
 
 		tableModel = new DefaultTableModel();

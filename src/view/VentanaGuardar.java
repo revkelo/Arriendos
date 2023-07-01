@@ -72,16 +72,19 @@ public class VentanaGuardar extends JFrame {
 		salir = new JButton("Salir");
 		salir.setBounds(10, 290, 73, 23);
 		salir.setActionCommand("Salir_guardar");
+		salir.setFocusable(false);
 		add(salir);
 		
 		comprobante = new JButton("Comprobante");
 		comprobante.setBounds(170, 217, 123, 23);
 		comprobante.setActionCommand("Comprobante");
+		comprobante.setFocusable(false);
 		add(comprobante);
 
 		guardar = new Button("Guardar");
 		guardar.setBounds(152, 270, 168, 49);
 		guardar.setActionCommand("Guardar_1");
+		guardar.setFocusable(false);
 		add(guardar);
 	}
 

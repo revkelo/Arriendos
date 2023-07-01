@@ -50,21 +50,25 @@ public class VentanaPrincipal extends JFrame {
 		agregar_b = new Button("Agregar");
 		agregar_b.setBounds(28, 359, 187, 216);
 		agregar_b.setActionCommand("Agregar");
+		agregar_b.setFocusable(false);
 		add(agregar_b);
 
 		modificar_b = new Button("Modificar");
 		modificar_b.setBounds(305, 359, 187, 216);
 		modificar_b.setActionCommand("Modificar");
+		modificar_b.setFocusable(false);
 		add(modificar_b);
 
 		eliminar_b = new Button("Eliminar");
 		eliminar_b.setBounds(573, 359, 187, 216);
 		eliminar_b.setActionCommand("Eliminar");
+		eliminar_b.setFocusable(false);
 		add(eliminar_b);
 
 		salir_b = new Button("Salir");
 		salir_b.setBounds(804, 359, 187, 216);
 		salir_b.setActionCommand("Salir");
+		salir_b.setFocusable(false);
 		add(salir_b);
 
 		imagen = new JLabel();

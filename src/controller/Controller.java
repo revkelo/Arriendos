@@ -45,6 +45,11 @@ public class Controller implements ActionListener {
 		md = new FachadaModel();
 		action();
 		cargarCombo();
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e12) {
+			e12.printStackTrace();
+		}
 
 	}
 
@@ -192,11 +197,7 @@ public class Controller implements ActionListener {
 
 			// TRUCO DE FILECHOOSER
 
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (Exception e12) {
-				e12.printStackTrace();
-			}
+		
 
 			// Crear un cuadro de diálogo de selección de archivo
 			JFileChooser fileChooser = new JFileChooser();
@@ -224,6 +225,7 @@ public class Controller implements ActionListener {
 					System.out.println("Se seleccionó una imagen: " + file.getAbsolutePath());
 				}
 			}
+			
 		}
 
 		if (comando.equals("Guardar_1")) {
